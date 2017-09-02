@@ -4,6 +4,7 @@
 set -e
 set -x
 
+p11-kit extract --comment --format=openssl-bundle --filter=certificates --overwrite ca-bundle.trust.crt
 cat ca-bundle.trust.crt | awk '/-----BEGIN TRUSTED CERTIFICATE-----/,/-----END TRUSTED CERTIFICATE-----/{ print $0; }' > cacert-clean.pem
 # split  -p "-----BEGIN CERTIFICATE-----" cacert-clean.pem cert_
 csplit -k -f cert_ cacert-clean.pem "/-----BEGIN TRUSTED CERTIFICATE-----/" {*}
